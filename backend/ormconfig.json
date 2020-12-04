@@ -1,0 +1,17 @@
+{
+    "type":"postgres",
+    "host":"gobarber.postgres.database.azure.com",
+    "port": 5432,
+    "username":"admroot@gobarber",
+    "password":"m4cAdm123",
+    "database":"gostack_gobarber",
+    "entities":[
+        "./src/models/*.ts"
+    ],
+    "migrations":[
+        "./src/database/migrations/*.ts"
+    ],
+    "cli": {
+        "migrationsDir":"./src/database/migrations"
+    }
+}
