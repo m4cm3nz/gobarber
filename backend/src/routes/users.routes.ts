@@ -14,6 +14,9 @@ usersRouter.post('/', async (request, response) => {
             password
         })
 
+        // @ts-ignore
+        delete user.password;
+
         return response.json(user);
 
     } catch (err) {

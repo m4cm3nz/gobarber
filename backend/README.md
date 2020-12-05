@@ -130,3 +130,11 @@ yarn typeorm migrations:revert
 
 # Package to metadate typeorm
 yarn add reflect-metadata
+
+# Crypto password
+yarn add bcryptjs
+yarn add @types/bcryptjs -D
+
+# JWT
+yarn add jsonwebtoken
+yarn add @types/jsonwebtoken -D
