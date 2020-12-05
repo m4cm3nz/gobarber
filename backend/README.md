@@ -138,3 +138,7 @@ yarn add @types/bcryptjs -D
 # JWT
 yarn add jsonwebtoken
 yarn add @types/jsonwebtoken -D
+
+# Upload
+yarn add multer
+yarn add @types/multer -D
