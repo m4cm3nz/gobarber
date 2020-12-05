@@ -142,3 +142,6 @@ yarn add @types/jsonwebtoken -D
 # Upload
 yarn add multer
 yarn add @types/multer -D
+
+# Express async errors
+yarn add express-async-errors
