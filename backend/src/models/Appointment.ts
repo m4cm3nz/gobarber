@@ -1,5 +1,3 @@
-import User from './User';
-
 import {
     Column,
     CreateDateColumn,
@@ -7,8 +5,9 @@ import {
     JoinColumn,
     ManyToOne,
     PrimaryGeneratedColumn,
-    UpdateDateColumn
+    UpdateDateColumn,
 } from 'typeorm';
+import User from './User';
 
 @Entity('appointments')
 class Appointment {
