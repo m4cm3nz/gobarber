@@ -1,7 +1,7 @@
-import { getRepository } from "typeorm";
-import User from "../models/User";
+import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
-import { sign } from "jsonwebtoken";
+import { sign } from 'jsonwebtoken';
+import User from '../models/User';
 import authConfig from '../config/auth';
 import AppError from '../errors/AppError';
 
@@ -12,7 +12,7 @@ interface Request {
 
 interface Response {
     user: User;
-    token : string;
+    token: string;
 }
 
 class AuthenticateUserService {
@@ -29,16 +29,16 @@ class AuthenticateUserService {
         if (!passwordMatched)
             throw new AppError('Incorrect email/password combination.', 401);
 
-        const {secret, expiresIn} = authConfig.jwt;
+        const { secret, expiresIn } = authConfig.jwt;
 
         const token = sign({}, secret, {
             subject: user.id,
-            expiresIn: expiresIn
-        })
+            expiresIn,
+        });
 
         return {
             user,
-            token
+            token,
         };
     }
 }
