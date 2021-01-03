@@ -1,147 +1,69 @@
-# Add package.json file
-yarn init -y
+# Recuparação de Senha
 
-# Add express
-yarn add express
-yarn add @types/express -D
+**RF**
 
-# Add tsconfig.json file
-yarn tsc --init
+- O usuário deve poder recuperar sua senha informando o seu e-mail;
+- O usuário deve receber um e-mail com instruções de recuperação de senha;
+- O usuário deve poder resetar sua senha;
 
-# Set outDir, rootDir
-/* Redirect output structure to the directory. */
-"outDir": "./dist",
-/* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
-"rootDir": "./src",
+**RNF**
 
-# Convert typescript to javascript
-yarn tsc
+- Utilizar o Mailtrap para testar envios em ambiente de dev;
+- Utilizar o Amazon SES para envios em produção;
+- O envio de e-mails deve acontecer em segundo plano (background job);
 
-# Set dev server with auto refresh.
-yarn add ts-node-dev -D
+**RN**
 
-# Eslint as dev dependêncy
-Problems with version 7.*
-yarn add eslint@6.8.0 -D
+- O link enviado por e-mail para resetar senha deve expirar em 2h;
+- O usuário precisa confirmar a nova senha ao resetar sua senha;
+-
 
-# Add eslint settings file
-yarn eslint --init
-yarn add @typescript-eslint/eslint-plugin@latest eslint-config-airbnb-base@latest eslint-plugin-import@^2.21.2 @typescript-eslint/parser@latest -D
+# Atualização do Perfil
 
-# Add .eslintignore
-/*.js
-node_modules
-dist
+**RF**
 
-# Eslint import resolver
-yarn add eslint-import-resolver-typescript -D
+- O usuário deve poder atualizar seu nome, e-mail e senha;
 
-add to .eslintrc.json
+**RN**
 
-"extends": [
-    "plugin:@typescript-eslint/recommended"
-],
+- O usuário não pode alterar seu e-mail para um e-mail já utilizado;
+- Para atualizar sua senha, o usuário deve informar a senha antiga;
+- Para atualizar sua senha, o usuário precisa confirmar a nova senha;
 
- "rules": {
-    "import/extensions": [
-        "error",
-        "ignorePackages",
-        {
-        "ts": "never"
-        }
-    ]
+# Painel do prestador
 
-"settings": {
-    "import/resolver": {
-      "typescript": {}
-    }
-  }
+**RF**
 
-# Prettier
-yarn add prettier eslint-config-prettier eslint-plugin-prettier -D
+- O usuário deve poder listar seus agendamentos em um dia específico;
+- O prestador deve receber uma notificação sempre que houver um novo agendamento;
+- O prestador deve poder visualizar as notificações não lidas;
 
-{
-	...
-  "extends": [
-		...
-    "prettier/@typescript-eslint",
-    "plugin:prettier/recommended"
-  ],
-  ...
-  "plugins": [
-    ...
-    "prettier"
-  ],
-  "rules": {
-    ...
-		"prettier/prettier": "error"
-  },
-  ...
-}
+**RNF**
 
-# Add prttier config js
-prettier.config.js
+- Os agendamentos do prestador no dia devem ser armazenadas em cache;
+- As notificações do prestador devem ser armazenados no MongoDB;
+- As notificações do prestador devem ser enviadas em tempo-real utilizando o Socket.io
 
-# Debug
-add lunch.json
-"request": "attach",
-"protocol": "inspector",
-"restart": true,
-Add flag --inspect to dev:server
+**RN**
 
-# UUIDV4
-yarn add uuidv4
+- A notificação deve ter um status de lida ou não lida para que o prestador possa controlar;
+# Agendamento de serviços
 
-# Date Library
-yarn add date-fns
+**RF**
 
+- O usuário deve poder listar todos os prestadores de serviço cadastrados;
+- O usuário deve poder listar os dias de um mês com pelo menos um horário disponível de um prestador;
+- O usuário deve poder listar horários disponíveis em um dia específico de um prestador;
+- O usuário deve poder realizar um novo agendamento com um prestador;
 
-# Database postgres
-yarn add typeorm pg
+**RNF**
 
-# ORMConfig
+- A listagem de prestadores deve ser armazenada em cache;
 
-{
-    "type":"postgres",
-    "host":"gobarber.postgres.database.azure.com",
-    "port": 5432,
-    "username":"admroot@gobarber",
-    "password":"m4cAdm123",
-    "database":"gostack_gobarber",
-    "migrations":[
-        "./src/database/migrations/*.ts"
-    ],
-    "cli": {
-        "migrationsDir":"./src/database/migrations"
-    }
-}
+**RN**
 
-# Configure typescript migrations package.json script tag
- "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
-
-# Create migration
-yarn typeorm migration:create -n CreateAppointments
-
-# Execute migrations
-yarn typeorm migration:run
-
-# Revert non commited migrations
-yarn typeorm migrations:revert
-
-# Package to metadate typeorm
-yarn add reflect-metadata
-
-# Crypto password
-yarn add bcryptjs
-yarn add @types/bcryptjs -D
-
-# JWT
-yarn add jsonwebtoken
-yarn add @types/jsonwebtoken -D
-
-# Upload
-yarn add multer
-yarn add @types/multer -D
-
-# Express async errors
-yarn add express-async-errors
+- Cada agendamento deve durar exatamente 1h exatamente;
+- Os agendamentos devem estar disponíveis entre 8h às 18h (último horário as 17h);
+- O usuário não pode agendar em um horário já ocupado;
+- O usuário não pode agendar em um horário que já passou;
+- O usuário não pode agendar serviços para si mesmo;
