@@ -13,7 +13,7 @@ export default class ForgotPasswordController {
             SendForgotPasswordEmailService,
         );
 
-        sendForgotPasswordEmail.execute(email);
+        await sendForgotPasswordEmail.execute(email);
 
         return response.status(204).json();
     }

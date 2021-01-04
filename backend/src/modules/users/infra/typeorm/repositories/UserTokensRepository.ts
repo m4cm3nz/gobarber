@@ -10,7 +10,7 @@ class FakeUserTokensRepository implements IUserTokensRepository {
         this.ormRepository = getRepository(UserToken);
     }
 
-    public async generateToken(user_id: string): Promise<UserToken> {
+    public generateToken(user_id: string): Promise<UserToken> {
         const userToken = this.ormRepository.create({
             token: uuid(),
             user_id,

@@ -1,10 +1,10 @@
 {
     "type":"postgres",
-    "host":"gobarber.postgres.database.azure.com",
+    "host":"localhost",
     "port": 5432,
-    "username":"admroot@gobarber",
-    "password":"m4cAdm123",
-    "database":"gostack_gobarber",
+    "username": "postgres",
+    "password": "docker",
+    "database": "gostack_gobarber",
     "entities":[
         "./src/modules/**/infra/typeorm/entities/*.ts"
     ],

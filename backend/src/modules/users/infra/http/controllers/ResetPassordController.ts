@@ -11,7 +11,7 @@ export default class ResetPasswordController {
 
         const resetPasswordService = container.resolve(ResetPasswordService);
 
-        resetPasswordService.execute({ token, password });
+        await resetPasswordService.execute({ token, password });
 
         return response.status(204).json();
     }
