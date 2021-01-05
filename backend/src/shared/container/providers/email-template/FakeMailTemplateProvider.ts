@@ -2,8 +2,8 @@ import IMailTemplateProvider from './IMailTemplateProvider';
 import IParseMailTemplate from './IParseMailTemplate';
 
 class FakeMailTemplateProvider implements IMailTemplateProvider {
-    public async parse({ template }: IParseMailTemplate): Promise<string> {
-        return template;
+    public async parse({ file }: IParseMailTemplate): Promise<string> {
+        return file;
     }
 }
 
