@@ -1,3 +1,5 @@
+import ISendMail from './ISendMail';
+
 export default interface IMailProvider {
-    sendMail(to: string, body: string): Promise<void>;
+    sendMail(data: ISendMail): Promise<void>;
 }
