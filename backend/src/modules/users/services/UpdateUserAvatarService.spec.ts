@@ -3,20 +3,27 @@ import AppError from '@shared/errors/AppError';
 import UpdateUserAvatarService from './UpdateUserAvatarService';
 import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
 
-describe('UpdateUserAvatar', () => {
-    it('should be able to update the user avatar', async () => {
-        const fakeUsersRepository = new FakeUsersRepository();
+let fakeUsersRepository: FakeUsersRepository;
+let updateUserAvatar: UpdateUserAvatarService;
+let fakeStorageProvider: FakeStorageProvider;
 
+describe('UpdateUserAvatar', () => {
+    beforeEach(() => {
+        fakeUsersRepository = new FakeUsersRepository();
+        fakeStorageProvider = new FakeStorageProvider();
+
+        updateUserAvatar = new UpdateUserAvatarService(
+            fakeUsersRepository,
+            fakeStorageProvider,
+        );
+    });
+
+    it('should be able to update the user avatar', async () => {
         const user = await fakeUsersRepository.create({
             name: 'Jonh Doe',
             email: 'johndoe@example.com',
             password: '1234',
         });
-
-        const updateUserAvatar = new UpdateUserAvatarService(
-            fakeUsersRepository,
-            new FakeStorageProvider(),
-        );
 
         await updateUserAvatar.execute({
             user_id: user.id,
@@ -27,14 +34,7 @@ describe('UpdateUserAvatar', () => {
     });
 
     it('should not be able to update avatar for a non existent user.', async () => {
-        const fakeUsersRepository = new FakeUsersRepository();
-
-        const updateUserAvatar = new UpdateUserAvatarService(
-            fakeUsersRepository,
-            new FakeStorageProvider(),
-        );
-
-        expect(
+        await expect(
             updateUserAvatar.execute({
                 user_id: 'non-existent-user',
                 avatarFileName: 'avatar.jpg',
@@ -43,19 +43,11 @@ describe('UpdateUserAvatar', () => {
     });
 
     it('should delete old avatar when updating a new one', async () => {
-        const fakeUsersRepository = new FakeUsersRepository();
-        const fakeStorageProvider = new FakeStorageProvider();
-
         const user = await fakeUsersRepository.create({
             name: 'Jonh Doe',
             email: 'johndoe@example.com',
             password: '1234',
         });
-
-        const updateUserAvatar = new UpdateUserAvatarService(
-            fakeUsersRepository,
-            fakeStorageProvider,
-        );
 
         await updateUserAvatar.execute({
             user_id: user.id,
