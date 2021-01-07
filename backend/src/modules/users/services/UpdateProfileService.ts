@@ -46,6 +46,7 @@ class UpdateProfileService {
         if (password && !old_password)
             throw new AppError(
                 'You need to inform the old password to set a newone',
+                401,
             );
 
         if (password && old_password) {
@@ -55,7 +56,7 @@ class UpdateProfileService {
             );
 
             if (!checkOldPassword)
-                throw new AppError('Old password does not match');
+                throw new AppError('Old password does not match', 401);
         }
 
         if (password)
