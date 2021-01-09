@@ -1,3 +1,4 @@
+import IFindAllProviders from '@modules/appointments/dtos/IFindAllProviders';
 import ICreateUser from '@modules/users/dtos/ICreateUser';
 import User from '@modules/users/infra/typeorm/entities/User';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
@@ -11,6 +12,17 @@ class FakeUsersRepository implements IUsersRepository {
 
         this.users.push(user);
         return user;
+    }
+
+    public async findAllProviders({
+        except_user_id,
+    }: IFindAllProviders): Promise<User[]> {
+        const { users } = this;
+
+        if (except_user_id)
+            return users.filter(user => user.id !== except_user_id);
+
+        return users;
     }
 
     public async findById(id: string): Promise<User | undefined> {
