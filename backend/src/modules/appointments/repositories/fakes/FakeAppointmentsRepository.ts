@@ -16,6 +16,7 @@ class FakeAppointmentsRepository implements IAppointmentsRepository {
     }
 
     public async create({
+        userId,
         providerId,
         date,
     }: ICreateAppointment): Promise<Appointment> {
@@ -23,6 +24,7 @@ class FakeAppointmentsRepository implements IAppointmentsRepository {
             ...new Appointment(),
             id: uuid(),
             date,
+            user_id: userId,
             provider_id: providerId,
         };
 

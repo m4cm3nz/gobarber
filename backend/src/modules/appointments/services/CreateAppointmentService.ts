@@ -5,6 +5,7 @@ import Appointment from '../infra/typeorm/entities/Appointment';
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
 
 interface IRequest {
+    userId: string;
     providerId: string;
     date: Date;
 }
@@ -16,7 +17,11 @@ class CreateAppointmentService {
         private appointmentsRepository: IAppointmentsRepository,
     ) {}
 
-    public async execute({ providerId, date }: IRequest): Promise<Appointment> {
+    public async execute({
+        userId,
+        providerId,
+        date,
+    }: IRequest): Promise<Appointment> {
         const appointmentDate = startOfHour(date);
 
         const findAppointmentInSameDate = await this.appointmentsRepository.findByDate(
@@ -27,6 +32,7 @@ class CreateAppointmentService {
             throw new AppError('This appointment is already booked', 422);
 
         const appointment = await this.appointmentsRepository.create({
+            userId,
             providerId,
             date: appointmentDate,
         });
