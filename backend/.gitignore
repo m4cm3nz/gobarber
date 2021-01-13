@@ -63,3 +63,7 @@ tmp/
 temp/
 tmp/*
 !tmp/.gitkeep
+
+#custom
+.env
+ormconfig.json
