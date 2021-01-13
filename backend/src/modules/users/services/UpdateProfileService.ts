@@ -12,6 +12,7 @@ interface IRequest {
     email: string;
     old_password?: string;
     password?: string;
+    password_confirmation?: string;
 }
 
 @injectable()
@@ -28,6 +29,7 @@ class UpdateProfileService {
         name,
         email,
         password,
+        password_confirmation,
         old_password,
     }: IRequest): Promise<User> {
         const user = await this.usersRepository.findById(user_id);
@@ -49,7 +51,19 @@ class UpdateProfileService {
                 401,
             );
 
+        if (password && !password_confirmation)
+            throw new AppError(
+                'You need to inform the confirmtion password',
+                404,
+            );
+
         if (password && old_password) {
+            if (password !== password_confirmation)
+                throw new AppError(
+                    'Password and password confirmation must match',
+                    404,
+                );
+
             const checkOldPassword = await this.hashProvider.compare(
                 old_password,
                 user.password,

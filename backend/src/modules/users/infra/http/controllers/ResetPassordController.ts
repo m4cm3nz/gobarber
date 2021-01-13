@@ -7,11 +7,15 @@ export default class ResetPasswordController {
         request: Request,
         response: Response,
     ): Promise<Response> {
-        const { password, token } = request.body;
+        const { password, token, password_confirmation } = request.body;
 
         const resetPasswordService = container.resolve(ResetPasswordService);
 
-        await resetPasswordService.execute({ token, password });
+        await resetPasswordService.execute({
+            token,
+            password,
+            password_confirmation,
+        });
 
         return response.status(204).json();
     }
