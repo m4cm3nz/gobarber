@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
 import nodeMailer, { Transporter } from 'nodemailer';
 import { inject, injectable } from 'tsyringe';
-import IMailTemplateProvider from '../../email-template/IMailTemplateProvider';
-import IMailProvider from '../IMailProvider';
-import ISendMail from '../ISendMail';
+import IMailTemplateProvider from '../../email-template/models/IMailTemplateProvider';
+import IMailProvider from '../models/IMailProvider';
+import ISendMail from '../models/ISendMail';
 
 @injectable()
 export default class EtherealMailProvider implements IMailProvider {

@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import AppError from '@shared/errors/AppError';
 import { inject, injectable } from 'tsyringe';
 
-import IStorageProvider from '@shared/container/providers/storage/IStorageProvider';
+import IStorageProvider from '@shared/container/providers/storage/models/IStorageProvider';
 import User from '../infra/typeorm/entities/User';
 import IUsersRepository from '../repositories/IUsersRepository';
 

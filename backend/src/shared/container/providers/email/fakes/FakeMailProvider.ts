@@ -1,5 +1,5 @@
-import IMailProvider from './IMailProvider';
-import ISendMail from './ISendMail';
+import IMailProvider from '../models/IMailProvider';
+import ISendMail from '../models/ISendMail';
 
 export default class FakeMailProvider implements IMailProvider {
     private messages: ISendMail[] = [];

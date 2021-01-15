@@ -1,3 +1,4 @@
+import upload from '@config/upload';
 import { Exclude, Expose } from 'class-transformer';
 import {
     Column,
@@ -33,7 +34,10 @@ class User {
 
     @Expose({ name: 'avatar_url' })
     getAvatarUrl(): string | null {
-        return this.avatar && `${process.env.APP_API_URL}/files/${this.avatar}`;
+        const { config } = upload;
+        return (
+            this.avatar && `${config[upload.driver].public_url}/${this.avatar}`
+        );
     }
 }
 

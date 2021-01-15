@@ -1,4 +1,4 @@
-import IParseMailTemplate from '../email-template/IParseMailTemplate';
+import IParseMailTemplate from '../../email-template/models/IParseMailTemplate';
 
 interface IMailContact {
     name: string;
