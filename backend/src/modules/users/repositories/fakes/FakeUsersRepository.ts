@@ -8,7 +8,8 @@ class FakeUsersRepository implements IUsersRepository {
     private users: User[] = [];
 
     public async create({ name, email, password }: ICreateUser): Promise<User> {
-        const user = { ...new User(), id: uuid(), name, email, password };
+        const user = new User();
+        Object.assign(user, { id: uuid(), name, email, password });
 
         this.users.push(user);
         return user;

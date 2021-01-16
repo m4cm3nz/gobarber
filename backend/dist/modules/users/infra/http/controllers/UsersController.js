@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const tsyringe_1 = require("tsyringe");
 const CreateUserService_1 = __importDefault(require("@modules/users/services/CreateUserService"));
+const class_transformer_1 = require("class-transformer");
 class UsersController {
     create(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -24,8 +25,7 @@ class UsersController {
                 email,
                 password,
             });
-            // delete user.password;
-            return response.json(user);
+            return response.json(class_transformer_1.classToClass(user));
         });
     }
 }

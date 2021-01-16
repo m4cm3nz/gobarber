@@ -76,7 +76,10 @@ class UpdateProfileService {
         if (password)
             user.password = await this.hashProvider.generate(password);
 
-        return this.usersRepository.save({ ...user, name, email });
+        user.name = name;
+        user.email = email;
+
+        return this.usersRepository.save(user);
     }
 }
 

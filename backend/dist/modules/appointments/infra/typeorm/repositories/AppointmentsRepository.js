@@ -26,14 +26,39 @@ class AppointmentsRepository {
             return findAppointment;
         });
     }
-    create({ providerId, date, }) {
+    create({ userId, providerId, date, }) {
         return __awaiter(this, void 0, void 0, function* () {
             const appointment = this.ormRepository.create({
+                user_id: userId,
                 provider_id: providerId,
                 date,
             });
             yield this.ormRepository.save(appointment);
             return appointment;
+        });
+    }
+    findAllInMonthFromProvider({ provider_id, month, year, }) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const parsedMonth = String(month).padStart(2, '0');
+            return this.ormRepository.find({
+                where: {
+                    provider_id,
+                    date: typeorm_1.Raw(dateFieldName => `to_char(${dateFieldName}, 'MM-YYYY') = '${parsedMonth}-${year}'`),
+                },
+            });
+        });
+    }
+    findAllInDayFromProvider({ provider_id, day, month, year, }) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const parsedDay = String(day).padStart(2, '0');
+            const parsedMonth = String(month).padStart(2, '0');
+            const appointments = yield this.ormRepository.find({
+                where: {
+                    provider_id,
+                    date: typeorm_1.Raw(dateFieldName => `to_char(${dateFieldName}, 'DD-MM-YYYY') = '${parsedDay}-${parsedMonth}-${year}'`),
+                },
+            });
+            return appointments;
         });
     }
 }

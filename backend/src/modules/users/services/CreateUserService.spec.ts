@@ -1,3 +1,4 @@
+import FakeCacheProvider from '@shared/container/providers/cache/fakes/FakeCacheProvider';
 import AppError from '@shared/errors/AppError';
 import FakeHashProvider from '../providers/hash/FakeHashProvider';
 import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
@@ -10,6 +11,7 @@ describe('CreateUser', () => {
         createUser = new CreateUserService(
             new FakeUsersRepository(),
             new FakeHashProvider(),
+            new FakeCacheProvider(),
         );
     });
 

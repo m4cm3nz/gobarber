@@ -48,6 +48,7 @@ describe('UpdateProfile', () => {
             email: 'johnmacdoe@example.com',
             old_password: '1234',
             password: '123456',
+            password_confirmation: '123456',
         });
 
         expect(updatedUser.password).toBe('123456');
@@ -66,6 +67,44 @@ describe('UpdateProfile', () => {
                 name: 'Jonh Mac Doe',
                 email: 'johnmacdoe@example.com',
                 password: '123456',
+                password_confirmation: '123456',
+            }),
+        ).rejects.toBeInstanceOf(AppError);
+    });
+
+    it('should not be able to update the password without password confirmation', async () => {
+        const user = await fakeUsersRepository.create({
+            name: 'Jonh Doe',
+            email: 'johndoe@example.com',
+            password: '1234',
+        });
+
+        await expect(
+            updateProfile.execute({
+                user_id: user.id,
+                name: 'Jonh Mac Doe',
+                email: 'johnmacdoe@example.com',
+                old_password: '1234',
+                password: '123456',
+            }),
+        ).rejects.toBeInstanceOf(AppError);
+    });
+
+    it("should not be able to update the password when password confirmation doesn't match", async () => {
+        const user = await fakeUsersRepository.create({
+            name: 'Jonh Doe',
+            email: 'johndoe@example.com',
+            password: '1234',
+        });
+
+        await expect(
+            updateProfile.execute({
+                user_id: user.id,
+                name: 'Jonh Mac Doe',
+                email: 'johnmacdoe@example.com',
+                old_password: '1234',
+                password: '123456',
+                password_confirmation: 'abcd',
             }),
         ).rejects.toBeInstanceOf(AppError);
     });
@@ -84,6 +123,7 @@ describe('UpdateProfile', () => {
                 email: 'johnmacdoe@example.com',
                 old_password: 'incorret-password',
                 password: '123456',
+                password_confirmation: '123456',
             }),
         ).rejects.toBeInstanceOf(AppError);
     });

@@ -20,9 +20,18 @@ class FakeUsersRepository {
     }
     create({ name, email, password }) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = Object.assign(Object.assign({}, new User_1.default()), { id: uuid_1.v4(), name, email, password });
+            const user = new User_1.default();
+            Object.assign(user, { id: uuid_1.v4(), name, email, password });
             this.users.push(user);
             return user;
+        });
+    }
+    findAllProviders({ except_user_id, }) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { users } = this;
+            if (except_user_id)
+                return users.filter(user => user.id !== except_user_id);
+            return users;
         });
     }
     findById(id) {

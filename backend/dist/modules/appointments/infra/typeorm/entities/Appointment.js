@@ -23,6 +23,15 @@ __decorate([
 __decorate([
     typeorm_1.Column(),
     __metadata("design:type", String)
+], Appointment.prototype, "user_id", void 0);
+__decorate([
+    typeorm_1.ManyToOne(() => User_1.default),
+    typeorm_1.JoinColumn({ name: 'user_id' }),
+    __metadata("design:type", User_1.default)
+], Appointment.prototype, "user", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", String)
 ], Appointment.prototype, "provider_id", void 0);
 __decorate([
     typeorm_1.ManyToOne(() => User_1.default),

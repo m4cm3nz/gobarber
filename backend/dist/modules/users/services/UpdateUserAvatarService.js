@@ -24,27 +24,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const path_1 = __importDefault(require("path"));
-const fs_1 = __importDefault(require("fs"));
+require("reflect-metadata");
 const AppError_1 = __importDefault(require("@shared/errors/AppError"));
-const upload_1 = __importDefault(require("@config/upload"));
 const tsyringe_1 = require("tsyringe");
 let UpdateUserAvatarService = class UpdateUserAvatarService {
-    constructor(usersRepository) {
+    constructor(usersRepository, storageProvider) {
         this.usersRepository = usersRepository;
+        this.storageProvider = storageProvider;
     }
     execute({ user_id, avatarFileName }) {
         return __awaiter(this, void 0, void 0, function* () {
             const user = yield this.usersRepository.findById(user_id);
             if (!user)
                 throw new AppError_1.default('Only authenticated users can change avatar.', 401);
-            if (user.avatar) {
-                const userAvatarFilePath = path_1.default.join(upload_1.default.directory, user.avatar);
-                const userAvatarFileExists = yield fs_1.default.promises.stat(userAvatarFilePath);
-                if (userAvatarFileExists)
-                    yield fs_1.default.promises.unlink(userAvatarFilePath);
-            }
-            user.avatar = avatarFileName;
+            if (user.avatar)
+                yield this.storageProvider.deleteFile(user.avatar);
+            const fileName = yield this.storageProvider.saveFile(avatarFileName);
+            user.avatar = fileName;
             yield this.usersRepository.save(user);
             return user;
         });
@@ -53,6 +49,7 @@ let UpdateUserAvatarService = class UpdateUserAvatarService {
 UpdateUserAvatarService = __decorate([
     tsyringe_1.injectable(),
     __param(0, tsyringe_1.inject('UsersRepository')),
-    __metadata("design:paramtypes", [Object])
+    __param(1, tsyringe_1.inject('StorageProvider')),
+    __metadata("design:paramtypes", [Object, Object])
 ], UpdateUserAvatarService);
 exports.default = UpdateUserAvatarService;

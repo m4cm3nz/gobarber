@@ -24,11 +24,28 @@ class FakeAppointmentsRepository {
             return this.appointments.find(appointment => date_fns_1.isEqual(appointment.date, date));
         });
     }
-    create({ providerId, date, }) {
+    create({ userId, providerId, date, }) {
         return __awaiter(this, void 0, void 0, function* () {
-            const appointment = Object.assign(Object.assign({}, new Appointment_1.default()), { id: uuid_1.v4(), date, provider_id: providerId });
+            const appointment = Object.assign(Object.assign({}, new Appointment_1.default()), { id: uuid_1.v4(), date, user_id: userId, provider_id: providerId });
             this.appointments.push(appointment);
             return appointment;
+        });
+    }
+    findAllInMonthFromProvider({ provider_id, month, year, }) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const appointments = this.appointments.filter(appointment => appointment.provider_id === provider_id &&
+                date_fns_1.getMonth(appointment.date) + 1 === month &&
+                date_fns_1.getYear(appointment.date) === year);
+            return appointments;
+        });
+    }
+    findAllInDayFromProvider({ provider_id, day, month, year, }) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const appointments = this.appointments.filter(appointment => appointment.provider_id === provider_id &&
+                date_fns_1.getDate(appointment.date) === day &&
+                date_fns_1.getMonth(appointment.date) + 1 === month &&
+                date_fns_1.getYear(appointment.date) === year);
+            return appointments;
         });
     }
 }
