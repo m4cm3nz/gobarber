@@ -1,4 +1,4 @@
-import { getDate, getDaysInMonth } from 'date-fns';
+import { getDate, getDaysInMonth, isAfter } from 'date-fns';
 import { inject, injectable } from 'tsyringe';
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
 
@@ -40,12 +40,21 @@ class ProviderMonthAvailabilityService {
             (_, index) => index + 1,
         );
 
+        const currentDate = new Date();
+
         const availability = eachDayArray.map(day => {
             const appointmentsInDay = appointments.filter(appointment => {
                 return getDate(appointment.date) === day;
             });
 
-            return { day, available: appointmentsInDay.length < 10 };
+            const compareDate = new Date(year, month - 1, day, 16, 59, 59);
+
+            return {
+                day,
+                available:
+                    appointmentsInDay.length < 10 &&
+                    isAfter(compareDate, currentDate),
+            };
         });
 
         return availability;
