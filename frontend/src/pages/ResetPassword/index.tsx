@@ -31,8 +31,7 @@ const RestPassword: React.FC = () => {
         formRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
-          password: Yup.string().required('Senha obrigatória'),
-
+          password: Yup.string().min(8, 'No mínimo 8 digitos'),
           password_confirmation: Yup.string().oneOf(
             [Yup.ref('password'), null],
             'A confirmação da senha não corresponde a senha informada.',
