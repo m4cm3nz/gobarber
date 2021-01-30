@@ -59,7 +59,7 @@ const Dashboard: React.FC = () => {
           {'\n'}
           <UserName>{user.name}</UserName>
         </HeaderTitle>
-        <ProfileButton onPress={navigateToProfile}>
+        <ProfileButton onPress={signOut}>
           <UserAvatar source={{ uri: user.avatar_url }} />
         </ProfileButton>
       </Header>
