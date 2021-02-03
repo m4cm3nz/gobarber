@@ -104,7 +104,7 @@ const Profile: React.FC = () => {
 
         addToast({
           type: 'error',
-          title: 'Error no cadastro',
+          title: 'Error na atualização do perfil',
           description:
             'Ocorreu um erro ao atualizar o perfil, tente novamente mais tarde.',
         });

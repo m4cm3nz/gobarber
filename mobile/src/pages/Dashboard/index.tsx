@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/Feather';
 
 import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
+import SignIn from '../Signin';
 import {
   Container,
   Header,
@@ -36,7 +37,7 @@ const Dashboard: React.FC = () => {
     });
   }, []);
 
-  const { signOut, user } = useAuth();
+  const { user, signOut } = useAuth();
 
   const { navigate } = useNavigation();
 
@@ -59,7 +60,7 @@ const Dashboard: React.FC = () => {
           {'\n'}
           <UserName>{user.name}</UserName>
         </HeaderTitle>
-        <ProfileButton onPress={signOut}>
+        <ProfileButton onPress={navigateToProfile}>
           <UserAvatar source={{ uri: user.avatar_url }} />
         </ProfileButton>
       </Header>

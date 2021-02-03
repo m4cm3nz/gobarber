@@ -1,6 +1,7 @@
 {
   "env": {
-    "es6": true
+    "es6": true,
+    "browser": true
   },
   "extends": [
     "plugin:react/recommended",
@@ -32,6 +33,7 @@
     "react/jsx-props-no-spreading": "off",
     "prettier/prettier": "error",
     "@typescript-eslint/camelcase": "off",
+    "import/no-duplicates": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "react/jsx-filename-extension": [
