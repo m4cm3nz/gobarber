@@ -1,7 +1,7 @@
 # GoBarber
 
 A scheduling app for Barbershops.  
-A Concept project, build during the Rocketseat GoStack Bootcamp.  
+A Concept project, builded during the Rocketseat GoStack Bootcamp.  
 It uses Node.js, React.js, and React Native, with Typescript.  
 It uses DDD, TTD, SOLID, and Clean Code principles and concepts.  
 A lot of cool packages in an awesome CSS styled components designed by the Rocketseat Team.  
